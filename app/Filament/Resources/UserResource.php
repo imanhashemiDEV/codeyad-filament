@@ -19,15 +19,29 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+     protected  static ?string $navigationLabel = 'کاربران';
+     protected  static ?string $pluralModelLabel = 'کاربران';
+     protected  static ?string $modelLabel = 'کاربر';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')->label('نام و نام خانوادگی'),
-                TextInput::make('email')->label('ایمیل'),
-                TextInput::make('password')->label('رمز عبور'),
+                TextInput::make('name')
+                    ->label('نام و نام خانوادگی')
+                    ->required()
+                    ->minLength(3),
+                TextInput::make('email')
+                    ->required()
+                    ->label('ایمیل')
+                    ->email()
+                    ->unique(ignoreRecord: true),
+                TextInput::make('password')
+                    ->required(fn (string $context):bool => $context == 'create')
+                    ->dehydrated(fn($state)=> filled($state))
+                    ->label('رمز عبور')
+                    ->minLength(6),
             ]);
     }
 
@@ -43,6 +57,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

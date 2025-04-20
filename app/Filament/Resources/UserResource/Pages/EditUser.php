@@ -16,11 +16,11 @@ class EditUser extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    protected function getCreatedNotification(): ?Notification
+    protected function getSavedNotification(): ?Notification
     {
         return Notification::make()
             ->success()
-            ->title('کاربر جدید ثبت شد');
+            ->title('کاربر ویرایش شد');
     }
 
     protected function getHeaderActions(): array
