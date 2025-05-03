@@ -6,6 +6,7 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -45,6 +46,7 @@ class UserResource extends Resource
                     ->dehydrated(fn($state)=> filled($state))
                     ->label('رمز عبور')
                     ->minLength(6),
+                Select::make('roles')->multiple()->relationship('roles', 'name')
             ]);
     }
 

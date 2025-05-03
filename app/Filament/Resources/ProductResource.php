@@ -58,7 +58,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
+                    ->suffix(' تومان ')
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('image')
                  ->disk('filament')->circular(),
