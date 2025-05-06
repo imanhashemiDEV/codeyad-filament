@@ -14,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
@@ -67,6 +68,10 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('info')
+                    ->label('جزئیات کاربر')
+                    ->url(fn (Model $record): string =>
+                    route('filament.admin.resources.users.user_info',['record'=>$record])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -88,6 +93,7 @@ class UserResource extends Resource
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
+            'user_info' => Pages\UserInfo::route('/{record}/user_info'),
         ];
     }
 }
