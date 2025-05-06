@@ -3,10 +3,12 @@
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use Filament\FontProviders\LocalFontProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -29,7 +31,12 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Blue,
+                'primary' => Color::Indigo,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -53,6 +60,19 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
+            ->font(
+                'Vazirmatn RD',
+                url: asset('css/fonts.css'),
+                provider: LocalFontProvider::class,
+            )
+            ->favicon(asset('favicon.ico'))
+            ->sidebarWidth('15rem')
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('خانه')
+                    ->url(fn (): string => route('home'))
+                    ->icon('heroicon-o-home')
+            ])
             ->authMiddleware([
                 Authenticate::class,
             ]);
