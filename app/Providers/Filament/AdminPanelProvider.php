@@ -45,9 +45,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                //Widgets\AccountWidget::class,
+               // Widgets\FilamentInfoWidget::class,
             ])
+            ->brandName('Codeyad Filament')
+            ->brandLogo('images/user.jpg')
+            ->brandLogoHeight('3rem')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
